@@ -4,7 +4,7 @@ import 'package:shoapsmart_useers_laerm/services/image_manger.dart';
 import 'package:shoapsmart_useers_laerm/widgets/subtitle_text.dart';
 import 'package:shoapsmart_useers_laerm/widgets/title_text.dart';
 
-class DialogSiginUp {
+class D {
   static Future<void> showAddImageNewUserDialog({
     required BuildContext context,
     required Function cameraFun,

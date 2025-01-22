@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shoapsmart_useers_laerm/conest/myValiditor.dart';
+import 'package:shoapsmart_useers_laerm/services/mehtode_my_app.dart';
 import 'package:shoapsmart_useers_laerm/widgets/auth/dialog_sigin_up.dart';
 import 'package:shoapsmart_useers_laerm/widgets/auth/pickeImage_widget.dart';
 import 'package:shoapsmart_useers_laerm/widgets/name_app_text.dart';
@@ -28,21 +29,21 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
 
   Future<void> localImageOicker() async {
     final ImagePicker picker = ImagePicker();
-    DialogSiginUp.showAddImageNewUserDialog(
+    MehtodeMyApp.imagePickerDialog(
       context: context,
-      cameraFun: () async {
+      cameraFCT: () async {
         pickedImage = await picker.pickImage(source: ImageSource.camera);
         setState(() {
           
         });
       },
-      gallaryFun: () async {
+      galleryFCT: () async {
         pickedImage = await picker.pickImage(source: ImageSource.gallery);
         setState(() {
           
         });
       },
-      removeFun: () {
+      removeFCT: () {
         
           
         

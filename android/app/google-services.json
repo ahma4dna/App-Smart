@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "349197032661",
+    "project_id": "app-smart-learm-5f7b5",
+    "storage_bucket": "app-smart-learm-5f7b5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349197032661:android:a5c450b5fa50917366965c",
+        "android_client_info": {
+          "package_name": "com.example.shoapsmart_useers_laerm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMQpTsEu-8Bit2vRZsOHsXJAtjFVmEaT4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -78,6 +78,8 @@ class MyApp extends StatelessWidget {
                   ForgtPasswordSecreen.routName: (context) =>
                       const ForgtPasswordSecreen(),
                   SaerchScreen.routName: (context) => SaerchScreen(),
+                  // ignore: prefer_const_constructors
+                  RootScreen.routName:(context)=>RootScreen(),
                 },
               );
             }),

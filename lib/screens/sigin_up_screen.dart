@@ -4,6 +4,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shoapsmart_useers_laerm/conest/myValiditor.dart';
+import 'package:shoapsmart_useers_laerm/root_screen.dart';
 import 'package:shoapsmart_useers_laerm/services/mehtode_my_app.dart';
 import 'package:shoapsmart_useers_laerm/widgets/auth/dialog_sigin_up.dart';
 import 'package:shoapsmart_useers_laerm/widgets/auth/pickeImage_widget.dart';
@@ -76,6 +77,7 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
           toastLength: Toast.LENGTH_SHORT,
           textColor: Colors.white,
         );
+          Navigator.pushReplacementNamed(context, RootScreen.routName);
       } on FirebaseException catch (eror) {
         await MehtodeMyApp.showErorrORwarnigDialog(
           context: context,

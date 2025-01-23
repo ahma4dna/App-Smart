@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:shoapsmart_useers_laerm/provider/theam_provider.dart';
@@ -20,6 +21,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  User? user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     final themeProvider = TheamProvider.get(context);
@@ -158,21 +160,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         style: const ButtonStyle(
                           backgroundColor: WidgetStatePropertyAll(Colors.blue),
                         ),
-                        icon: const Icon(
-                          Icons.login_outlined,
+                        icon: Icon(
+                          user == null ? Icons.login : Icons.logout,
                           color: Colors.white,
                         ),
                         onPressed: () async {
-                          Navigator.pushNamed(context, LoginScreen.roatName);
-                          // MehtodeMyApp.showErorrORwarnigDialog(
-                          //   context: context,
-                          //   subTile: "Hello test",
-                          //   fce: () {},
-                          //   isErorr: false,
-                          // );
+                          if (user == null) {
+                            Navigator.pushNamed(context, LoginScreen.roatName);
+                          } else {
+                            MehtodeMyApp.showErorrORwarnigDialog(
+                              context: context,
+                              subTile: "Hello test",
+                              fce: () {},
+                              isErorr: false,
+                            );
+                          }
                         },
-                        label: const Text(
-                          'LogOut',
+                        label: Text(
+                          user == null ? "SignIn" : 'LogOut',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),

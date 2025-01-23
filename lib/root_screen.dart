@@ -9,6 +9,8 @@ import 'package:shoapsmart_useers_laerm/screens/saerch_screen.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
 class RootScreen extends StatefulWidget {
+    static String routName = "RootScreen";
+
   const RootScreen({super.key});
 
   @override

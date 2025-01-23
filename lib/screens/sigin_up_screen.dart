@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shoapsmart_useers_laerm/conest/myValiditor.dart';
 import 'package:shoapsmart_useers_laerm/services/mehtode_my_app.dart';
@@ -26,6 +28,8 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
   bool obscure = true;
   bool obscureRequest = true;
   XFile? pickedImage;
+  bool isLoading = false;
+  final auth = FirebaseAuth.instance;
 
   Future<void> localImageOicker() async {
     final ImagePicker picker = ImagePicker();
@@ -33,25 +37,63 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
       context: context,
       cameraFCT: () async {
         pickedImage = await picker.pickImage(source: ImageSource.camera);
-        setState(() {
-          
-        });
+        setState(() {});
       },
       galleryFCT: () async {
         pickedImage = await picker.pickImage(source: ImageSource.gallery);
-        setState(() {
-          
-        });
+        setState(() {});
       },
       removeFCT: () {
-        
-          
-        
         setState(() {
           pickedImage = null;
         });
       },
     );
+  }
+
+  Future<void> signUp() async {
+    bool isValid = key.currentState!.validate();
+    FocusScope.of(context).unfocus();
+    if (isValid) {
+      key.currentState!.save();
+      // if (pickedImage == null) {
+      //   MehtodeMyApp.showErorrORwarnigDialog(
+      //     context: context,
+      //     subTile: "Make sure to pick up an image",
+      //     fce: () {},
+      //   );
+      // }
+      try {
+        setState(() {
+          isLoading = true;
+        });
+        await auth.createUserWithEmailAndPassword(
+          email: emailControler.text.trim(),
+          password: passwordControler.text.trim(),
+        );
+        Fluttertoast.showToast(
+          msg: "An acount has ben creat",
+          toastLength: Toast.LENGTH_SHORT,
+          textColor: Colors.white,
+        );
+      } on FirebaseException catch (eror) {
+        await MehtodeMyApp.showErorrORwarnigDialog(
+          context: context,
+          subTile: "Erorr Sign up ${eror.message}",
+          fce: () {},
+        );
+      } catch (eror) {
+        await MehtodeMyApp.showErorrORwarnigDialog(
+          context: context,
+          subTile: "Erorr Sign up $eror",
+          fce: () {},
+        );
+      } finally {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
   }
 
   @override
@@ -115,12 +157,10 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
                     }
                   },
                   controller: nameControler,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.blueGrey[100],
-                    border: const OutlineInputBorder(),
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
                     hintText: "Add Name",
-                    prefixIcon: const Icon(IconlyLight.user2),
+                    prefixIcon: Icon(IconlyLight.user2),
                   ),
                 ),
                 const SizedBox(
@@ -135,12 +175,10 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
                     }
                   },
                   controller: emailControler,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.blueGrey[100],
-                    border: const OutlineInputBorder(),
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
                     hintText: "Add Email ",
-                    prefixIcon: const Icon(IconlyLight.message),
+                    prefixIcon: Icon(IconlyLight.message),
                   ),
                 ),
                 const SizedBox(
@@ -157,8 +195,6 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
                   obscureText: obscure,
                   controller: passwordControler,
                   decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.blueGrey[100],
                     border: const OutlineInputBorder(),
                     hintText: "Add Password",
                     prefixIcon: const Icon(IconlyLight.password),
@@ -185,8 +221,6 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
                   controller: requestPasswordControler,
                   obscureText: obscureRequest,
                   decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.blueGrey[100],
                     border: const OutlineInputBorder(),
                     hintText: "Add Request Password ",
                     prefixIcon: const Icon(IconlyLight.password),
@@ -207,7 +241,9 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    if (key.currentState!.validate()) {}
+                    if (key.currentState!.validate()) {
+                      signUp();
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blueGrey[100],

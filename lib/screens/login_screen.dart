@@ -66,8 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   controller: emailControler,
                   decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.blueGrey[100],
+                    
                     border: const OutlineInputBorder(),
                     hintText: "Add Email Addres",
                     prefixIcon: const Icon(IconlyLight.message),
@@ -87,8 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: passwordControler,
                   obscureText: obscure,
                   decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.blueGrey[100],
+                    
                     border: const OutlineInputBorder(),
                     hintText: "Add Password ",
                     prefixIcon: const Icon(IconlyLight.password),

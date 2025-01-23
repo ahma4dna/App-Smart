@@ -22,7 +22,7 @@ class PickeimageWidget extends StatelessWidget {
             child: pickedImage == null
                 ? Container(
                     decoration: BoxDecoration(
-                      border: Border.all(),
+                      border: Border.all(color: Colors.blue),
                       borderRadius: BorderRadius.circular(8),
                     ),
                   )
@@ -38,6 +38,7 @@ class PickeimageWidget extends StatelessWidget {
           child: Material(
             color: Colors.lightBlue,
             borderRadius: BorderRadius.circular(12),
+            
             child: InkWell(
               borderRadius: BorderRadius.circular(12),
               onTap: () {
@@ -48,7 +49,7 @@ class PickeimageWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 // ignore: prefer_const_constructors
                 child: Icon(
-                  Icons.add_shopping_cart_outlined,
+                  Icons.image,
                   color: Colors.white,
                 ),
               ),

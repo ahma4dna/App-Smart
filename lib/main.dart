@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shoapsmart_useers_laerm/conest/app_theam.dart';
 import 'package:shoapsmart_useers_laerm/provider/card_provider.dart';
@@ -17,7 +18,7 @@ import 'package:shoapsmart_useers_laerm/screens/saerch_screen.dart';
 import 'package:shoapsmart_useers_laerm/screens/sigin_up_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -26,43 +27,61 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => TheamProvider()..getTheam(),
-        ),
-          ChangeNotifierProvider(
-          create: (context) =>ProductProvider(),
-        ),
-          ChangeNotifierProvider(
-          create: (context) =>CardProvider(),
-        ),
-          ChangeNotifierProvider(
-          create: (context) =>WishlistProvider(),
-        ),
-            ChangeNotifierProvider(
-          create: (context) =>ViwedRecentlyProvider(),
-        ),
-      ],
-      child: Consumer<TheamProvider>(
-        builder: (context,TheamProvider,chaild) {
-          return MaterialApp(
-            home:   const RootScreen(),
-            debugShowCheckedModeBanner: false,
-            theme: Styles.themeData(isDarkTheam: TheamProvider.getIsDarkTheam, context: context),
-            routes: {
-              ProductDeatels.routeName:(context)=>const ProductDeatels(),
-              WishlistSecreen.routeName:(context)=>const WishlistSecreen(),
-              ViwedRecently.routeName:(context)=>const ViwedRecently(),
-              SiginUpScreen.routName:(context)=>const SiginUpScreen(),
-              OrderSecreen.roatName:(context)=>const OrderSecreen(),
-              LoginScreen.roatName:(context)=>const LoginScreen(),
-              ForgtPasswordSecreen.routName:(context)=>const ForgtPasswordSecreen(),
-              SaerchScreen.routName:(context)=> SaerchScreen(),
-            },
+    return FutureBuilder(
+        future: Firebase.initializeApp(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+             const Scaffold(
+              body: Center(
+                child: const CircularProgressIndicator(),
+              ),
+            );
+          } else if (snapshot.hasError) {
+             Scaffold(
+              body: SelectableText("An erorr has ben ${snapshot.error}"),
+            );
+          }
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider(
+                create: (context) => TheamProvider()..getTheam(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => ProductProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => CardProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => WishlistProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => ViwedRecentlyProvider(),
+              ),
+            ],
+            child: Consumer<TheamProvider>(
+                builder: (context, TheamProvider, chaild) {
+              return MaterialApp(
+                home: const RootScreen(),
+                debugShowCheckedModeBanner: false,
+                theme: Styles.themeData(
+                    isDarkTheam: TheamProvider.getIsDarkTheam,
+                    context: context),
+                routes: {
+                  ProductDeatels.routeName: (context) => const ProductDeatels(),
+                  WishlistSecreen.routeName: (context) =>
+                      const WishlistSecreen(),
+                  ViwedRecently.routeName: (context) => const ViwedRecently(),
+                  SiginUpScreen.routName: (context) => const SiginUpScreen(),
+                  OrderSecreen.roatName: (context) => const OrderSecreen(),
+                  LoginScreen.roatName: (context) => const LoginScreen(),
+                  ForgtPasswordSecreen.routName: (context) =>
+                      const ForgtPasswordSecreen(),
+                  SaerchScreen.routName: (context) => SaerchScreen(),
+                },
+              );
+            }),
           );
-        }
-      ),
-    );
+        });
   }
 }

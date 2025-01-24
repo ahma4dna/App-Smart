@@ -7,12 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:349197032661:android:a5c450b5fa50917366965c",
+        "mobilesdk_app_id": "1:349197032661:android:b2de25bb4203455866965c",
         "android_client_info": {
-          "package_name": "com.example.shoapsmart_useers_laerm"
+          "package_name": "com.example.admin_panel_shop_smart"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "349197032661-ep0vtg3i9iu43lgevulkuu2rbr8mqb6j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCMQpTsEu-8Bit2vRZsOHsXJAtjFVmEaT4"
@@ -20,7 +25,49 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349197032661-ep0vtg3i9iu43lgevulkuu2rbr8mqb6j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349197032661:android:a5c450b5fa50917366965c",
+        "android_client_info": {
+          "package_name": "com.example.shoapsmart_useers_laerm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349197032661-htid9crkemamig71e4tobm6dq5fh8cai.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shoapsmart_useers_laerm",
+            "certificate_hash": "73b47dda2ab7163d02212c89f7209f13b4f37fc6"
+          }
+        },
+        {
+          "client_id": "349197032661-ep0vtg3i9iu43lgevulkuu2rbr8mqb6j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMQpTsEu-8Bit2vRZsOHsXJAtjFVmEaT4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349197032661-ep0vtg3i9iu43lgevulkuu2rbr8mqb6j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

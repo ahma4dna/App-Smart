@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shoapsmart_useers_laerm/conest/myValiditor.dart';
 import 'package:shoapsmart_useers_laerm/root_screen.dart';
+import 'package:shoapsmart_useers_laerm/screens/loading_manger.dart';
 import 'package:shoapsmart_useers_laerm/services/mehtode_my_app.dart';
 import 'package:shoapsmart_useers_laerm/widgets/auth/dialog_sigin_up.dart';
 import 'package:shoapsmart_useers_laerm/widgets/auth/pickeImage_widget.dart';
@@ -77,7 +78,8 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
           toastLength: Toast.LENGTH_SHORT,
           textColor: Colors.white,
         );
-          Navigator.pushReplacementNamed(context, RootScreen.routName);
+          if (!mounted) return;
+        await  Navigator.pushReplacementNamed(context, RootScreen.routName);
       } on FirebaseException catch (eror) {
         await MehtodeMyApp.showErorrORwarnigDialog(
           context: context,
@@ -103,169 +105,172 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       // ignore: prefer_const_constructors
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Form(
-            key: key,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 35,
-                ),
-                const Center(
-                  child: NameAppText(
-                    fontSize: 30,
+      body: LoadingManger(
+        isloading: isLoading,
+        chaild: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Form(
+              key: key,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 35,
                   ),
-                ),
-                const SizedBox(
-                  height: 35,
-                ),
-                const TitleText(
-                  lable: "Welcome",
-                  fontSize: 25,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const SubtitleText(
-                  lable:
-                      "sign up now to recive spicel offres and update frome our app",
-                  fontSize: 15,
-                ),
-                Center(
-                  child: SizedBox(
-                    width: size.width * 0.35,
-                    height: size.width * 0.35,
-                    child: PickeimageWidget(
-                      pickedImage: pickedImage,
-                      function: () {
-                        localImageOicker();
-                      },
+                  const Center(
+                    child: NameAppText(
+                      fontSize: 30,
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Pleass Add Name";
-                    } else {
-                      return null;
-                    }
-                  },
-                  controller: nameControler,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Add Name",
-                    prefixIcon: Icon(IconlyLight.user2),
+                  const SizedBox(
+                    height: 35,
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Pleass Add Email";
-                    } else {
-                      return null;
-                    }
-                  },
-                  controller: emailControler,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Add Email ",
-                    prefixIcon: Icon(IconlyLight.message),
+                  const TitleText(
+                    lable: "Welcome",
+                    fontSize: 25,
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Pleass Add password";
-                    } else {
-                      return null;
-                    }
-                  },
-                  obscureText: obscure,
-                  controller: passwordControler,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    hintText: "Add Password",
-                    prefixIcon: const Icon(IconlyLight.password),
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          obscure = !obscure;
-                        });
-                      },
-                      icon: obscure
-                          ? const Icon(Icons.visibility)
-                          : const Icon(Icons.visibility_off),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const SubtitleText(
+                    lable:
+                        "sign up now to recive spicel offres and update frome our app",
+                    fontSize: 15,
+                  ),
+                  Center(
+                    child: SizedBox(
+                      width: size.width * 0.35,
+                      height: size.width * 0.35,
+                      child: PickeimageWidget(
+                        pickedImage: pickedImage,
+                        function: () {
+                          localImageOicker();
+                        },
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  validator: (value) {
-                    return Myvaliditor.RequstPassowrd(
-                        value: value, passsword: passwordControler.text);
-                  },
-                  controller: requestPasswordControler,
-                  obscureText: obscureRequest,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    hintText: "Add Request Password ",
-                    prefixIcon: const Icon(IconlyLight.password),
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          obscureRequest = !obscureRequest;
-                        });
-                      },
-                      icon: obscureRequest
-                          ? const Icon(Icons.visibility)
-                          : const Icon(Icons.visibility_off),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Pleass Add Name";
+                      } else {
+                        return null;
+                      }
+                    },
+                    controller: nameControler,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: "Add Name",
+                      prefixIcon: Icon(IconlyLight.user2),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (key.currentState!.validate()) {
-                      signUp();
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueGrey[100],
-                    elevation: 4,
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    minimumSize: const Size(double.infinity, 55),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Pleass Add Email";
+                      } else {
+                        return null;
+                      }
+                    },
+                    controller: emailControler,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: "Add Email ",
+                      prefixIcon: Icon(IconlyLight.message),
                     ),
                   ),
-                  child: const Text(
-                    'Sigin up',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Pleass Add password";
+                      } else {
+                        return null;
+                      }
+                    },
+                    obscureText: obscure,
+                    controller: passwordControler,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      hintText: "Add Password",
+                      prefixIcon: const Icon(IconlyLight.password),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            obscure = !obscure;
+                          });
+                        },
+                        icon: obscure
+                            ? const Icon(Icons.visibility)
+                            : const Icon(Icons.visibility_off),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    validator: (value) {
+                      return Myvaliditor.RequstPassowrd(
+                          value: value, passsword: passwordControler.text);
+                    },
+                    controller: requestPasswordControler,
+                    obscureText: obscureRequest,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      hintText: "Add Request Password ",
+                      prefixIcon: const Icon(IconlyLight.password),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            obscureRequest = !obscureRequest;
+                          });
+                        },
+                        icon: obscureRequest
+                            ? const Icon(Icons.visibility)
+                            : const Icon(Icons.visibility_off),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (key.currentState!.validate()) {
+                        signUp();
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueGrey[100],
+                      elevation: 4,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      minimumSize: const Size(double.infinity, 55),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: const Text(
+                      'Sigin up',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

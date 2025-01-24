@@ -171,7 +171,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             MehtodeMyApp.showErorrORwarnigDialog(
                               context: context,
                               subTile: "Hello test",
-                              fce: () {},
+                              fce: () async {
+                                await FirebaseAuth.instance.signOut();
+                                if (!mounted) return;
+                                await Navigator.pushNamed(
+                                    context, LoginScreen.roatName);
+                              },
                               isErorr: false,
                             );
                           }

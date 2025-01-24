@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -73,13 +74,28 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
           email: emailControler.text.trim(),
           password: passwordControler.text.trim(),
         );
+
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(auth.currentUser!.uid)
+            .set(
+          {
+            "userId": auth.currentUser!.uid,
+            "userName": nameControler.text,
+            "userEmail": emailControler.text,
+            "userImage": pickedImage == null ? "" : pickedImage!.path,
+            "createdAt": Timestamp.now(),
+            "userCart": [],
+            "userWishlist": [],
+          },
+        );
         Fluttertoast.showToast(
           msg: "An acount has ben creat",
           toastLength: Toast.LENGTH_SHORT,
           textColor: Colors.white,
         );
-          if (!mounted) return;
-        await  Navigator.pushReplacementNamed(context, RootScreen.routName);
+        if (!mounted) return;
+        await Navigator.pushReplacementNamed(context, RootScreen.routName);
       } on FirebaseException catch (eror) {
         await MehtodeMyApp.showErorrORwarnigDialog(
           context: context,

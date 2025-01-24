@@ -1,9 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
+import 'package:shoapsmart_useers_laerm/moeals/user_modeal.dart';
 import 'package:shoapsmart_useers_laerm/provider/theam_provider.dart';
+import 'package:shoapsmart_useers_laerm/provider/user_provider.dart';
 import 'package:shoapsmart_useers_laerm/screens/inner_secreen/viwed_recently.dart';
 import 'package:shoapsmart_useers_laerm/screens/inner_secreen/wishlist_secreen.dart';
+import 'package:shoapsmart_useers_laerm/screens/loading_manger.dart';
 import 'package:shoapsmart_useers_laerm/screens/login_screen.dart';
 import 'package:shoapsmart_useers_laerm/screens/order/order_screen.dart';
 import 'package:shoapsmart_useers_laerm/services/image_manger.dart';
@@ -22,6 +26,42 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   User? user = FirebaseAuth.instance.currentUser;
+  bool isLoading = true;
+  UserModeal? userModeal;
+
+  Future<void> fatcInfo() async {
+    if (user == null) {
+      isLoading = false;
+      return;
+    }
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      userModeal = await userProvider.fatcUserInfo();
+    } on FirebaseException catch (eror) {
+      await MehtodeMyApp.showErorrORwarnigDialog(
+        context: context,
+        subTile: "Erorr User info  ${eror.message}",
+        fce: () {},
+      );
+    } catch (eror) {
+      await MehtodeMyApp.showErorrORwarnigDialog(
+        context: context,
+        subTile: "Erorr User info $eror",
+        fce: () {},
+      );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    fatcInfo();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = TheamProvider.get(context);
@@ -38,160 +78,177 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Visibility(
-              visible: false,
-              child: Padding(
-                padding: EdgeInsets.all(20.0),
-                child: TitleText(lable: 'Pleasse to havev unlatimte acces'),
+      body: LoadingManger(
+        isloading: isLoading,
+        chaild: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Visibility(
+                visible: user == null ? true : false,
+                child: const Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: TitleText(lable: 'Pleasse to havev unlatimte acces'),
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
+              const SizedBox(
+                height: 10,
               ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).cardColor,
-                      border: Border.all(
-                        color: Theme.of(context).colorScheme.surface,
-                        width: 3,
+              userModeal == null
+                  ? const SizedBox.shrink()
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
                       ),
-                      image: const DecorationImage(
-                        image: NetworkImage(
-                            'https://img.freepik.com/premium-vector/user-circle-with-blue-gradient-circle_78370-4727.jpg?ga=GA1.1.398565215.1725138437&semt=ais_hybrid'),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 7,
-                  ),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TitleText(lable: 'Ahmad Nagy'),
-                      SubtitleText(lable: 'ahmadna@gmail.com'),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 24,
-                horizontal: 12,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const TitleText(lable: 'General'),
-                  CustomListTile(
-                    text: 'All order',
-                    imagePthe: AssetsManager.orderSvg,
-                    icon: IconlyBold.arrowRight2,
-                    function: () {
-                      Navigator.pushNamed(context, OrderSecreen.roatName);
-                    },
-                  ),
-                  CustomListTile(
-                    text: 'Wishlist',
-                    imagePthe: AssetsManager.wishlistSvg,
-                    icon: IconlyBold.arrowRight2,
-                    function: () async {
-                      await Navigator.pushNamed(
-                          context, WishlistSecreen.routeName);
-                    },
-                  ),
-                  CustomListTile(
-                    text: 'Viwede recenly',
-                    imagePthe: AssetsManager.recent,
-                    icon: IconlyBold.arrowRight2,
-                    function: () async {
-                      await Navigator.pushNamed(
-                          context, ViwedRecently.routeName);
-                    },
-                  ),
-                  CustomListTile(
-                    text: 'Addres',
-                    imagePthe: AssetsManager.address,
-                    icon: IconlyBold.arrowRight2,
-                    function: () {},
-                  ),
-                  const Divider(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const TitleText(lable: 'Setings'),
-                  SwitchListTile(
-                    activeColor: Colors.blue,
-                    secondary: Image.asset(
-                      AssetsManager.theme,
-                      height: 30,
-                    ),
-                    title: Text(themeProvider.getIsDarkTheam
-                        ? 'Dark Mode'
-                        : 'Light Mode'),
-                    value: themeProvider.getIsDarkTheam,
-                    onChanged: (value) {
-                      themeProvider.setTheam(theamValue: value);
-                    },
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Divider(),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Center(
-                      child: ElevatedButton.icon(
-                        style: const ButtonStyle(
-                          backgroundColor: WidgetStatePropertyAll(Colors.blue),
-                        ),
-                        icon: Icon(
-                          user == null ? Icons.login : Icons.logout,
-                          color: Colors.white,
-                        ),
-                        onPressed: () async {
-                          if (user == null) {
-                            Navigator.pushNamed(context, LoginScreen.roatName);
-                          } else {
-                            MehtodeMyApp.showErorrORwarnigDialog(
-                              context: context,
-                              subTile: "Hello test",
-                              fce: () async {
-                                await FirebaseAuth.instance.signOut();
-                                if (!mounted) return;
-                                await Navigator.pushNamed(
-                                    context, LoginScreen.roatName);
-                              },
-                              isErorr: false,
-                            );
-                          }
-                        },
-                        label: Text(
-                          user == null ? "SignIn" : 'LogOut',
-                          style: TextStyle(color: Colors.white),
-                        ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Theme.of(context).cardColor,
+                              border: Border.all(
+                                color: Theme.of(context).colorScheme.surface,
+                                width: 3,
+                              ),
+                              image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: NetworkImage(
+                                  userModeal!.userImage,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 7,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TitleText(
+                                lable: userModeal!.userName,
+                              ),
+                              SubtitleText(
+                                lable: userModeal!.userEmail,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 24,
+                  horizontal: 12,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const TitleText(lable: 'General'),
+                    userModeal == null
+                        ? const SizedBox.shrink()
+                        : CustomListTile(
+                            text: 'All order',
+                            imagePthe: AssetsManager.orderSvg,
+                            icon: IconlyBold.arrowRight2,
+                            function: () {
+                              Navigator.pushNamed(
+                                  context, OrderSecreen.roatName);
+                            },
+                          ),
+                    userModeal == null
+                        ? const SizedBox.shrink()
+                        : CustomListTile(
+                            text: 'Wishlist',
+                            imagePthe: AssetsManager.wishlistSvg,
+                            icon: IconlyBold.arrowRight2,
+                            function: () async {
+                              await Navigator.pushNamed(
+                                  context, WishlistSecreen.routeName);
+                            },
+                          ),
+                    CustomListTile(
+                      text: 'Viwede recenly',
+                      imagePthe: AssetsManager.recent,
+                      icon: IconlyBold.arrowRight2,
+                      function: () async {
+                        await Navigator.pushNamed(
+                            context, ViwedRecently.routeName);
+                      },
+                    ),
+                    CustomListTile(
+                      text: 'Addres',
+                      imagePthe: AssetsManager.address,
+                      icon: IconlyBold.arrowRight2,
+                      function: () {},
+                    ),
+                    const Divider(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const TitleText(lable: 'Setings'),
+                    SwitchListTile(
+                      activeColor: Colors.blue,
+                      secondary: Image.asset(
+                        AssetsManager.theme,
+                        height: 30,
+                      ),
+                      title: Text(themeProvider.getIsDarkTheam
+                          ? 'Dark Mode'
+                          : 'Light Mode'),
+                      value: themeProvider.getIsDarkTheam,
+                      onChanged: (value) {
+                        themeProvider.setTheam(theamValue: value);
+                      },
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Divider(),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Center(
+                        child: ElevatedButton.icon(
+                          style: const ButtonStyle(
+                            backgroundColor:
+                                WidgetStatePropertyAll(Colors.blue),
+                          ),
+                          icon: Icon(
+                            user == null ? Icons.login : Icons.logout,
+                            color: Colors.white,
+                          ),
+                          onPressed: () async {
+                            if (user == null) {
+                              Navigator.pushNamed(
+                                  context, LoginScreen.roatName);
+                            } else {
+                              MehtodeMyApp.showErorrORwarnigDialog(
+                                context: context,
+                                subTile: "Hello test",
+                                fce: () async {
+                                  await FirebaseAuth.instance.signOut();
+                                  if (!mounted) return;
+                                  await Navigator.pushNamed(
+                                      context, LoginScreen.roatName);
+                                },
+                                isErorr: false,
+                              );
+                            }
+                          },
+                          label: Text(
+                            user == null ? "SignIn" : 'LogOut',
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

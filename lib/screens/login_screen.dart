@@ -237,7 +237,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {Navigator.pushReplacementNamed(context, RootScreen.routName);},
                         child: const Text(
                           'GUAEST',
                           style: TextStyle(

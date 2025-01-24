@@ -4,6 +4,7 @@ import 'package:shoapsmart_useers_laerm/conest/app_theam.dart';
 import 'package:shoapsmart_useers_laerm/provider/card_provider.dart';
 import 'package:shoapsmart_useers_laerm/provider/product_provider.dart';
 import 'package:shoapsmart_useers_laerm/provider/theam_provider.dart';
+import 'package:shoapsmart_useers_laerm/provider/user_provider.dart';
 import 'package:shoapsmart_useers_laerm/provider/viwed_recently.dart';
 import 'package:shoapsmart_useers_laerm/provider/wishlist_provider.dart';
 import 'package:shoapsmart_useers_laerm/root_screen.dart';
@@ -57,6 +58,9 @@ class MyApp extends StatelessWidget {
               ),
               ChangeNotifierProvider(
                 create: (context) => ViwedRecentlyProvider(),
+              ),
+                ChangeNotifierProvider(
+                create: (context) => UserProvider(),
               ),
             ],
             child: Consumer<TheamProvider>(

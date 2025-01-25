@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -32,6 +35,7 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
   bool obscureRequest = true;
   XFile? pickedImage;
   bool isLoading = false;
+  String? urlImage;
   final auth = FirebaseAuth.instance;
 
   Future<void> localImageOicker() async {
@@ -57,19 +61,29 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
   Future<void> signUp() async {
     bool isValid = key.currentState!.validate();
     FocusScope.of(context).unfocus();
+      ///pricing image to firebase storage
+    // if (pickedImage == null) {
+    //     MehtodeMyApp.showErorrORwarnigDialog(
+    //       context: context,
+    //       subTile: "Make sure to pick up an image",
+    //       fce: () {},
+    //     );
+    //   }
     if (isValid) {
       key.currentState!.save();
-      // if (pickedImage == null) {
-      //   MehtodeMyApp.showErorrORwarnigDialog(
-      //     context: context,
-      //     subTile: "Make sure to pick up an image",
-      //     fce: () {},
-      //   );
-      // }
+
       try {
         setState(() {
           isLoading = true;
         });
+        
+        ///pricing image to firebase storage
+        // final ref = FirebaseStorage.instance
+        //     .ref()
+        //     .child("userImage")
+        //     .child("${emailControler.text.trim()}.jpj");
+        // ref.putFile(File(pickedImage!.path));
+        // urlImage = await ref.getDownloadURL();
         await auth.createUserWithEmailAndPassword(
           email: emailControler.text.trim(),
           password: passwordControler.text.trim(),
@@ -83,7 +97,8 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
             "userId": auth.currentUser!.uid,
             "userName": nameControler.text,
             "userEmail": emailControler.text,
-            "userImage": pickedImage == null ? "" : pickedImage!.path,
+            "userImage": urlImage ??
+                "https://firebasestorage.googleapis.com/v0/b/udemy-89ded.appspot.com/o/users%2F1000012507.jpg?alt=media&token=c73e60d4-e7f2-4202-948e-37ed73be2596",
             "createdAt": Timestamp.now(),
             "userCart": [],
             "userWishlist": [],

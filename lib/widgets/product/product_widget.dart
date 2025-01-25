@@ -1,11 +1,6 @@
-import 'dart:developer';
-
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
-import 'package:shoapsmart_useers_laerm/conest/app_conestant.dart';
-import 'package:shoapsmart_useers_laerm/moeals/product_mosel.dart';
 import 'package:shoapsmart_useers_laerm/provider/card_provider.dart';
 import 'package:shoapsmart_useers_laerm/provider/product_provider.dart';
 import 'package:shoapsmart_useers_laerm/provider/viwed_recently.dart';
@@ -48,7 +43,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                     borderRadius: BorderRadius.circular(15),
                     child: FancyShimmerImage(
                       imageUrl: getCurntProduct.productImage,
-                      width: double.infinity,
+                      width: size.height * 0.22,
                       height: size.height * 0.22,
                     ),
                   ),
@@ -77,10 +72,11 @@ class _ProductWidgetState extends State<ProductWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Flexible(
-                        flex: 3,
+                        flex: 2,
                         child: SubtitleText(
-                            lable: "${getCurntProduct.productPrice}\$" ??
-                                "199.9 \$"),
+                          lable:
+                              "${getCurntProduct.productPrice}\$" ?? "199.9 \$",
+                        ),
                       ),
                       Flexible(
                         child: Material(

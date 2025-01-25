@@ -60,27 +60,33 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              const Padding(
+               Padding(
                 padding: EdgeInsets.only(
                   left: 8,
                 ),
-                child: TitleText(
-                  lable: "Ltast Arival",
+                child: Visibility(
+                  visible: productProvider.getProduct.isNotEmpty,
+                  child: TitleText(
+                    lable: "Ltast Arival",
+                  ),
                 ),
               ),
-              SizedBox(
-                height: size.height * 0.2,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListView.builder(
-                    itemCount: 10,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) =>
-                         ChangeNotifierProvider.value(
-                          value:productProvider.getProduct[index] ,
-                          child: LatestAreivalProduct(
-                            productId: productProvider.Product[index].productId,
-                          )),
+              Visibility(
+                  visible: productProvider.getProduct.isNotEmpty,
+                child: SizedBox(
+                  height: size.height * 0.2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListView.builder(
+                      itemCount: productProvider.getProduct.length<10?productProvider.getProduct.length:10,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) =>
+                           ChangeNotifierProvider.value(
+                            value:productProvider.getProduct[index] ,
+                            child: LatestAreivalProduct(
+                              productId: productProvider.getProduct[index].productId,
+                            )),
+                    ),
                   ),
                 ),
               ),

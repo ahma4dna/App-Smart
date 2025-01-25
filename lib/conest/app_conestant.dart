@@ -11,7 +11,7 @@ class AppConestant {
 
   ];
   static List<CatogerisModeals> catogriesModels = [
-    CatogerisModeals(name:'Phone' , image: AssetsManager.mobiles, id: AssetsManager.mobiles),
+    CatogerisModeals(name:'Phones' , image: AssetsManager.mobiles, id: AssetsManager.mobiles),
     CatogerisModeals(name:'Electronics' , image: AssetsManager.electronics, id: AssetsManager.electronics),
     CatogerisModeals(name:'Accessories' , image: AssetsManager.cosmetics, id: AssetsManager.cosmetics),
     CatogerisModeals(name:'Shoes' , image: AssetsManager.shoes, id: AssetsManager.shoes),

@@ -39,7 +39,7 @@ class LatestAreivalProduct extends StatelessWidget {
                 borderRadius: BorderRadius.circular(7),
                 child: FancyShimmerImage(
                   imageUrl: getProduct.productImage,
-                  height: size.width * 0.24,
+                  height: size.width * 0.25,
                   width: size.width * 0.30,
                 ),
               ),
@@ -81,6 +81,7 @@ class LatestAreivalProduct extends StatelessWidget {
                     child: SubtitleText(
                       lable: "${getProduct.productPrice}\$",
                       color: Colors.blue,
+                      fontSize: 15,
                     ),
                   ),
                 ],

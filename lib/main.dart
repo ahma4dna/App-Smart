@@ -28,66 +28,69 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: Firebase.initializeApp(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-             const Scaffold(
-              body: Center(
-                child: const CircularProgressIndicator(),
-              ),
-            );
-          } else if (snapshot.hasError) {
-             Scaffold(
-              body: SelectableText("An erorr has ben ${snapshot.error}"),
-            );
-          }
-          return MultiProvider(
-            providers: [
-              ChangeNotifierProvider(
-                create: (context) => TheamProvider()..getTheam(),
-              ),
-              ChangeNotifierProvider(
-                create: (context) => ProductProvider(),
-              ),
-              ChangeNotifierProvider(
-                create: (context) => CardProvider(),
-              ),
-              ChangeNotifierProvider(
-                create: (context) => WishlistProvider(),
-              ),
-              ChangeNotifierProvider(
-                create: (context) => ViwedRecentlyProvider(),
-              ),
-                ChangeNotifierProvider(
-                create: (context) => UserProvider(),
-              ),
-            ],
-            child: Consumer<TheamProvider>(
-                builder: (context, TheamProvider, chaild) {
-              return MaterialApp(
-                home: const RootScreen(),
-                debugShowCheckedModeBanner: false,
-                theme: Styles.themeData(
-                    isDarkTheam: TheamProvider.getIsDarkTheam,
-                    context: context),
-                routes: {
-                  ProductDeatels.routeName: (context) => const ProductDeatels(),
-                  WishlistSecreen.routeName: (context) =>
-                      const WishlistSecreen(),
-                  ViwedRecently.routeName: (context) => const ViwedRecently(),
-                  SiginUpScreen.routName: (context) => const SiginUpScreen(),
-                  OrderSecreen.roatName: (context) => const OrderSecreen(),
-                  LoginScreen.roatName: (context) => const LoginScreen(),
-                  ForgtPasswordSecreen.routName: (context) =>
-                      const ForgtPasswordSecreen(),
-                  SaerchScreen.routName: (context) => SaerchScreen(),
-                  // ignore: prefer_const_constructors
-                  RootScreen.routName:(context)=>RootScreen(),
-                },
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: FutureBuilder(
+          future: Firebase.initializeApp(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+               return Scaffold(
+                body: Center(
+                  child: const CircularProgressIndicator(),
+                ),
               );
-            }),
-          );
-        });
+            } else if (snapshot.hasError) {
+              return Scaffold(
+                body: SelectableText("An erorr has ben ${snapshot.error}"),
+              );
+            }
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider(
+                  create: (context) => TheamProvider()..getTheam(),
+                ),
+                ChangeNotifierProvider(
+                  create: (context) => ProductProvider(),
+                ),
+                ChangeNotifierProvider(
+                  create: (context) => CardProvider(),
+                ),
+                ChangeNotifierProvider(
+                  create: (context) => WishlistProvider(),
+                ),
+                ChangeNotifierProvider(
+                  create: (context) => ViwedRecentlyProvider(),
+                ),
+                  ChangeNotifierProvider(
+                  create: (context) => UserProvider(),
+                ),
+              ],
+              child: Consumer<TheamProvider>(
+                  builder: (context, TheamProvider, chaild) {
+                return MaterialApp(
+                  home: const RootScreen(),
+                  debugShowCheckedModeBanner: false,
+                  theme: Styles.themeData(
+                      isDarkTheam: TheamProvider.getIsDarkTheam,
+                      context: context),
+                  routes: {
+                    ProductDeatels.routeName: (context) => const ProductDeatels(),
+                    WishlistSecreen.routeName: (context) =>
+                        const WishlistSecreen(),
+                    ViwedRecently.routeName: (context) => const ViwedRecently(),
+                    SiginUpScreen.routName: (context) => const SiginUpScreen(),
+                    OrderSecreen.roatName: (context) => const OrderSecreen(),
+                    LoginScreen.roatName: (context) => const LoginScreen(),
+                    ForgtPasswordSecreen.routName: (context) =>
+                        const ForgtPasswordSecreen(),
+                    SaerchScreen.routName: (context) => SaerchScreen(),
+                    // ignore: prefer_const_constructors
+                    RootScreen.routName:(context)=>RootScreen(),
+                  },
+                );
+              }),
+            );
+          }),
+    );
   }
 }

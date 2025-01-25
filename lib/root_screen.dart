@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shoapsmart_useers_laerm/provider/card_provider.dart';
+import 'package:shoapsmart_useers_laerm/provider/product_provider.dart';
 import 'package:shoapsmart_useers_laerm/provider/theam_provider.dart';
 import 'package:shoapsmart_useers_laerm/screens/card_screnn/cart_secreen.dart';
 import 'package:shoapsmart_useers_laerm/screens/home_screen.dart';
@@ -9,7 +12,7 @@ import 'package:shoapsmart_useers_laerm/screens/saerch_screen.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
 class RootScreen extends StatefulWidget {
-    static String routName = "RootScreen";
+  static String routName = "RootScreen";
 
   const RootScreen({super.key});
 
@@ -20,12 +23,34 @@ class RootScreen extends StatefulWidget {
 class _RootScreenState extends State<RootScreen> {
   int couantPage = 0;
   late PageController controller;
+  bool isLoading = true;
   List<Widget> screens = [
     const HomeScreen(),
-     SaerchScreen(),
+    SaerchScreen(),
     const CartSecreen(),
     const ProfileScreen(),
   ];
+  Future<void> fatchDataProduct() async {
+    final productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
+
+    try {
+    
+      Future.wait(
+        {
+          ///awiating any future to complete
+          productProvider.featcProducts(),
+        },
+      );
+    } catch (e) {
+      log(e.toString());
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -35,8 +60,18 @@ class _RootScreenState extends State<RootScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    if(isLoading){
+      fatchDataProduct();
+
+    }
+    
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-      final cardProvider = Provider.of<CardProvider>(context);
+    final cardProvider = Provider.of<CardProvider>(context);
     final isDark = TheamProvider.get(context).getIsDarkTheam;
     return Scaffold(
       body: PageView(

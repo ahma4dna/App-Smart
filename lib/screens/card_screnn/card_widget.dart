@@ -57,7 +57,7 @@ class CardWidget extends StatelessWidget {
                               SizedBox(
                                 width: size.width * 0.6,
                                 child: TitleText(
-                                  lable: cardMoelProvier.productId,
+                                  lable: getCurntProduct.productTitle,
                                   maxLine: 2,
                                 ),
                               ),

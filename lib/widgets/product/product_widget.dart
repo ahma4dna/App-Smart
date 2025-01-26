@@ -75,7 +75,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                         flex: 2,
                         child: SubtitleText(
                           lable:
-                              "${getCurntProduct.productPrice}" ?? "199.9 \$",
+                              "${getCurntProduct.productPrice} LYD" ?? "199.9 \$",
                         ),
                       ),
                       Flexible(

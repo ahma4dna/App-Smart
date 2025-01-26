@@ -10,7 +10,7 @@ class ProductModel with ChangeNotifier {
       productDescription,
       productImage,
       productQuantity;
-  Timestamp? createdAr;
+  Timestamp? createdAt;
 
   ProductModel({
     required this.productId,
@@ -20,7 +20,7 @@ class ProductModel with ChangeNotifier {
     required this.productDescription,
     required this.productImage,
     required this.productQuantity,
-    this.createdAr,
+    this.createdAt,
   });
   factory ProductModel.formFireStore(DocumentSnapshot doc) {
     Map data = doc.data() as Map<String, dynamic>;
@@ -32,7 +32,7 @@ class ProductModel with ChangeNotifier {
       productDescription:  data["productDescription"]??"",
       productImage:  data["productImage"]??"",
        productQuantity:  data["productQuantity"]??"",
-       createdAr:  Timestamp.now(),
+       createdAt:  Timestamp.now(),
     );
   }
 }

@@ -36,7 +36,7 @@ class ProductProvider with ChangeNotifier {
   final proData = FirebaseFirestore.instance.collection("products");
   Future<List<ProductModel>> featcProducts() async {
     try {
-      await proData.get().then((valueProducts) {
+      await proData.orderBy("createdAt",descending:false).get().then((valueProducts) {
         Product.clear();
 
         for (var elemnt in valueProducts.docs) {
@@ -52,7 +52,7 @@ class ProductProvider with ChangeNotifier {
 
   Stream<List<ProductModel>> featchProductsStream() {
     try {
-      return proData.snapshots().map(
+      return proData.orderBy("createdAt",descending:false ).snapshots().map(
         (snapshot) {
           Product.clear();
 

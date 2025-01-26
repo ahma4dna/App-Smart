@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:provider/provider.dart';
 import 'package:shoapsmart_useers_laerm/moeals/product_mosel.dart';
 import 'package:shoapsmart_useers_laerm/provider/product_provider.dart';
 import 'package:shoapsmart_useers_laerm/services/image_manger.dart';
@@ -56,72 +55,91 @@ class _SearchScreenState extends State<SaerchScreen> {
             ),
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: productList.isEmpty
-              ? const Center(child: TitleText(lable: "Catogry Empty"))
-              : Column(
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    TextField(
-                      controller: searchTextControllar,
-                      decoration: InputDecoration(
-                        hintText: "Search",
-                        // ignore: prefer_const_constructors
-                        prefixIcon: Icon(IconlyLight.search),
-                        suffixIcon: IconButton(
-                          onPressed: () {
+        body: productList.isEmpty
+            ? const Center(child: TitleText(lable: "Catogry Empty"))
+            : StreamBuilder<List<ProductModel>>(
+                stream: productProvider.featchProductsStream(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: TitleText(
+                        lable: snapshot.error.toString(),
+                      ),
+                    );
+                  } else if (snapshot.data == null) {
+                    return Center(
+                      child: TitleText(
+                        lable: snapshot.error.toString(),
+                      ),
+                    );
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextField(
+                          controller: searchTextControllar,
+                          decoration: InputDecoration(
+                            hintText: "Search",
+                            // ignore: prefer_const_constructors
+                            prefixIcon: Icon(IconlyLight.search),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                // setState(() {
+                                searchTextControllar.clear();
+                                FocusScope.of(context).unfocus();
+                                // });
+                              },
+                              icon: const Icon(Icons.close),
+                            ),
+                          ),
+                          onChanged: (value) {
                             // setState(() {
-                            searchTextControllar.clear();
-                            FocusScope.of(context).unfocus();
+                            //   productListSerch = productProvider
+                            //       .serchQuery(searchTextControllar.text);
                             // });
                           },
-                          icon: const Icon(Icons.close),
+                          onSubmitted: (value) {
+                            setState(() {
+                              productListSerch = productProvider.serchQuery(
+                                  searchTextControllar.text, productList);
+                            });
+                          },
                         ),
-                      ),
-                      onChanged: (value) {
-                        // setState(() {
-                        //   productListSerch = productProvider
-                        //       .serchQuery(searchTextControllar.text);
-                        // });
-                      },
-                      onSubmitted: (value) {
-                        setState(() {
-                          productListSerch = productProvider
-                              .serchQuery(searchTextControllar.text,productList);
-                        });
-                      },
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    if (productListSerch.isEmpty &&
-                        searchTextControllar.text.isNotEmpty) ...[
-                      const Center(
-                        child: TitleText(
-                          lable: "Not found product",
-                          fontSize: 35,
+                        const SizedBox(
+                          height: 10,
                         ),
-                      ),
-                    ],
-                    Expanded(
-                      child: DynamicHeightGridView(
-                        builder: (context, index) => ProductWidget(
-                          productId: searchTextControllar.text.isNotEmpty
-                              ? productListSerch[index].productId
-                              : productList[index].productId,
+                        if (productListSerch.isEmpty &&
+                            searchTextControllar.text.isNotEmpty) ...[
+                          const Center(
+                            child: TitleText(
+                              lable: "Not found product",
+                              fontSize: 35,
+                            ),
+                          ),
+                        ],
+                        Expanded(
+                          child: DynamicHeightGridView(
+                            builder: (context, index) => ProductWidget(
+                              productId: searchTextControllar.text.isNotEmpty
+                                  ? productListSerch[index].productId
+                                  : productList[index].productId,
+                            ),
+                            itemCount: searchTextControllar.text.isNotEmpty
+                                ? productListSerch.length
+                                : productList.length,
+                            crossAxisCount: 2,
+                          ),
                         ),
-                        itemCount: searchTextControllar.text.isNotEmpty
-                            ? productListSerch.length
-                            : productList.length,
-                        crossAxisCount: 2,
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-        ),
+                  );
+                }),
       ),
     );
   }

@@ -79,7 +79,7 @@ class LatestAreivalProduct extends StatelessWidget {
                   // ignore: prefer_const_constructors
                   FittedBox(
                     child: SubtitleText(
-                      lable: "${getProduct.productPrice}\$",
+                      lable: "${getProduct.productPrice}",
                       color: Colors.blue,
                       fontSize: 15,
                     ),

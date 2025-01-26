@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shoapsmart_useers_laerm/moeals/product_mosel.dart';
-import 'package:uuid/uuid.dart';
 
 class ProductProvider with ChangeNotifier {
   static ProductProvider get(context) => Provider.of(context);
@@ -34,18 +33,36 @@ class ProductProvider with ChangeNotifier {
     return catLisSer;
   }
 
-    Future<List<ProductModel>> featcProducts() async {
+  final proData = FirebaseFirestore.instance.collection("products");
+  Future<List<ProductModel>> featcProducts() async {
     try {
-      final proData = await FirebaseFirestore.instance
-          .collection("products")
-          .get()
-          .then((valueProducts) {
+      await proData.get().then((valueProducts) {
+        Product.clear();
+
         for (var elemnt in valueProducts.docs) {
           Product.insert(0, ProductModel.formFireStore(elemnt));
         }
       });
       notifyListeners();
       return Product;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Stream<List<ProductModel>> featchProductsStream() {
+    try {
+      return proData.snapshots().map(
+        (snapshot) {
+          Product.clear();
+
+          for (var elemnt in snapshot.docs) {
+            Product.insert(0, ProductModel.formFireStore(elemnt));
+          }
+
+          return Product;
+        },
+      );
     } catch (e) {
       rethrow;
     }

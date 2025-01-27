@@ -51,7 +51,7 @@ class _WishlistSecreenState extends State<WishlistSecreen> {
                         context: context,
                         subTile: "Clear All WishList",
                         fce: () {
-                          wishlistProvider.clearAllIteamWishList();
+                          wishlistProvider.removeAllWishlistFirebase();
                         });
                   },
                   icon: const Icon(
@@ -63,6 +63,7 @@ class _WishlistSecreenState extends State<WishlistSecreen> {
             ),
             body: DynamicHeightGridView(
               builder: (context, index) => ProductWidget(
+                
                 productId: wishlistProvider.getWishListIea.values
                     .toList()[index]
                     .productId,

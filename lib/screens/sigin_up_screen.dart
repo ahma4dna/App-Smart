@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:shoapsmart_useers_laerm/conest/myValiditor.dart';
+import 'package:shoapsmart_useers_laerm/provider/card_provider.dart';
+import 'package:shoapsmart_useers_laerm/provider/wishlist_provider.dart';
 import 'package:shoapsmart_useers_laerm/root_screen.dart';
 import 'package:shoapsmart_useers_laerm/screens/loading_manger.dart';
 import 'package:shoapsmart_useers_laerm/services/mehtode_my_app.dart';
@@ -59,9 +62,13 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
   }
 
   Future<void> signUp() async {
+    final wishlistProvider = Provider.of<WishlistProvider>(context,listen: false);
+    final cardPro = Provider.of<CardProvider>(context,listen: false);
+
     bool isValid = key.currentState!.validate();
     FocusScope.of(context).unfocus();
-      ///pricing image to firebase storage
+
+    ///pricing image to firebase storage
     // if (pickedImage == null) {
     //     MehtodeMyApp.showErorrORwarnigDialog(
     //       context: context,
@@ -76,7 +83,7 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
         setState(() {
           isLoading = true;
         });
-        
+
         ///pricing image to firebase storage
         // final ref = FirebaseStorage.instance
         //     .ref()
@@ -110,6 +117,8 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
           textColor: Colors.white,
         );
         if (!mounted) return;
+        cardPro.clearAllIteam();
+        wishlistProvider.clearAllIteamWishList();
         await Navigator.pushReplacementNamed(context, RootScreen.routName);
       } on FirebaseException catch (eror) {
         await MehtodeMyApp.showErorrORwarnigDialog(

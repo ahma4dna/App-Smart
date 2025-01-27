@@ -4,6 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
+import 'package:shoapsmart_useers_laerm/provider/card_provider.dart';
+import 'package:shoapsmart_useers_laerm/provider/wishlist_provider.dart';
 import 'package:shoapsmart_useers_laerm/root_screen.dart';
 import 'package:shoapsmart_useers_laerm/services/mehtode_my_app.dart';
 
@@ -14,13 +17,18 @@ class GoogleBouttonWidgget extends StatelessWidget {
   });
 
   Future<void> signInWithGoogle({required BuildContext context}) async {
+    final wishlistProvider =
+        Provider.of<WishlistProvider>(context, listen: false);
+    final cardPro = Provider.of<CardProvider>(context, listen: false);
     final googleSignIn = GoogleSignIn();
+    await googleSignIn.signOut();
     final googleAcount = await googleSignIn.signIn();
     if (googleAcount != null) {
       final googleAuth = await googleAcount.authentication;
       if (googleAuth.accessToken != null && googleAuth.idToken != null) {
         try {
           /// is awiting for the  result of the authReslt
+
           final authResult = await FirebaseAuth.instance.signInWithCredential(
             GoogleAuthProvider.credential(
               accessToken: googleAuth.accessToken,
@@ -45,6 +53,8 @@ class GoogleBouttonWidgget extends StatelessWidget {
               },
             );
           }
+          cardPro.clearAllIteam();
+          wishlistProvider.clearAllIteamWishList();
 
           WidgetsBinding.instance.addPostFrameCallback((_) async {
             await Navigator.pushReplacementNamed(context, RootScreen.routName);

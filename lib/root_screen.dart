@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shoapsmart_useers_laerm/provider/card_provider.dart';
 import 'package:shoapsmart_useers_laerm/provider/product_provider.dart';
 import 'package:shoapsmart_useers_laerm/provider/theam_provider.dart';
+import 'package:shoapsmart_useers_laerm/provider/wishlist_provider.dart';
 import 'package:shoapsmart_useers_laerm/screens/card_screnn/cart_secreen.dart';
 import 'package:shoapsmart_useers_laerm/screens/home_screen.dart';
 import 'package:shoapsmart_useers_laerm/screens/profile_screen.dart';
@@ -34,6 +35,8 @@ class _RootScreenState extends State<RootScreen> {
     final productProvider =
         Provider.of<ProductProvider>(context, listen: false);
     final cardProvider = Provider.of<CardProvider>(context, listen: false);
+        final wishlistProvider = Provider.of<WishlistProvider>(context,listen: false);
+
 
     try {
       Future.wait(
@@ -47,6 +50,12 @@ class _RootScreenState extends State<RootScreen> {
         {
         
           cardProvider.featchCardFromFirebase(),
+        },
+      );
+        Future.wait(
+        {
+      
+          wishlistProvider.fatcWislistFirebase(),
         },
       );
     } catch (e) {

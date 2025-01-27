@@ -14,6 +14,10 @@ class CardProvider with ChangeNotifier {
   Map<String, CardModels> get getCardIea => cardIteams;
 
   ///Firebase
+  bool isProductIncard({required String productId}) {
+    return cardIteams.containsKey(productId);
+  }
+
   final userData = FirebaseFirestore.instance.collection("users");
   final auth = FirebaseAuth.instance;
   Future<void> addCartToFirebase(
@@ -24,6 +28,7 @@ class CardProvider with ChangeNotifier {
     if (user == null) {
       MehtodeMyApp.showErorrORwarnigDialog(
           context: context, subTile: "Please sign in", fce: () {});
+      return;
     }
     final cardId = Uuid().v4();
     try {
@@ -40,27 +45,97 @@ class CardProvider with ChangeNotifier {
           ),
         },
       );
+      await featchCardFromFirebase();
       Fluttertoast.showToast(msg: "Product added to cart");
     } catch (e) {
       rethrow;
     }
   }
 
-  bool isProductIncard({required String productId}) {
-    return cardIteams.containsKey(productId);
-  }
+  Future<void> featchCardFromFirebase() async {
+    User? user = auth.currentUser;
+    if (user == null) {
+      cardIteams.clear();
+      return;
+    }
 
-  void addProductToCard({required String productId}) {
-    cardIteams.putIfAbsent(
-      productId,
-      () => CardModels(
-        productId: productId,
-        cardId: const Uuid().v4(),
-        quantiti: 1,
-      ),
-    );
+    try {
+      final useDoc = await userData.doc(user!.uid).get();
+      final data = useDoc.data();
+      if (data == null || !data.containsKey("userCart")) {
+        return;
+      }
+      final leng = useDoc.get("userCart").length;
+      for (int imdex = 0; imdex < leng; imdex++) {
+        cardIteams.putIfAbsent(
+          useDoc.get("userCart")[imdex]["productId"],
+          () => CardModels(
+            productId: useDoc.get("userCart")[imdex]["productId"],
+            cardId: useDoc.get("userCart")[imdex]["crdId"],
+            quantiti: useDoc.get("userCart")[imdex]["quantiti"],
+          ),
+        );
+      }
+    } catch (e) {
+      rethrow;
+    }
     notifyListeners();
   }
+
+  Future<void> clearAllIteamCardFirbase() async {
+    User? user = auth.currentUser;
+
+    try {
+      await userData.doc(user!.uid).update({"userCart": []});
+      cardIteams.clear();
+    } catch (e) {
+      rethrow;
+    }
+    notifyListeners();
+  }
+
+  Future<void> clearOneteamCardFirbase(
+      {required String productId,
+      required int quantiti,
+      required String cardId}) async {
+    User? user = auth.currentUser;
+
+    try {
+      await userData.doc(user!.uid).update({
+        "userCart": FieldValue.arrayRemove(
+          [
+            {
+              "crdId": cardId,
+              "productId": productId,
+              "quantiti": quantiti,
+            }
+          ],
+        ),
+      });
+      cardIteams.remove(productId);
+      await featchCardFromFirebase();
+    } catch (e) {
+      rethrow;
+    }
+    notifyListeners();
+  }
+
+  ///Local
+  // bool isProductIncard({required String productId}) {
+  //   return cardIteams.containsKey(productId);
+  // }
+
+  // void addProductToCard({required String productId}) {
+  //   cardIteams.putIfAbsent(
+  //     productId,
+  //     () => CardModels(
+  //       productId: productId,
+  //       cardId: const Uuid().v4(),
+  //       quantiti: 1,
+  //     ),
+  //   );
+  //   notifyListeners();
+  // }
 
   void updateProductToCard({required String productId, required int quantiti}) {
     cardIteams.update(

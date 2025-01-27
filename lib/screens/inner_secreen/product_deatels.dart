@@ -143,13 +143,17 @@ class _ProductDeatelsState extends State<ProductDeatels> {
                             BorderSide.none,
                           ),
                         ),
-                        onPressed: () {
-                          if (cardProvider.isProductIncard(
+                        onPressed: () async{
+                            if (cardProvider.isProductIncard(
                                   productId: getCurntProduct.productId)) {
                                 return;
                               }
-                              cardProvider.addProductToCard(
-                                  productId: getCurntProduct.productId);
+                              // cardProvider.addProductToCard(
+                              //     productId: getCurntProduct.productId);
+                            await  cardProvider.addCartToFirebase(
+                                  productId: getCurntProduct.productId,
+                                  quantiti: 1,
+                                  context: context);
                         },
                         label:  Text(cardProvider.isProductIncard(
                                       productId: getCurntProduct.productId)?

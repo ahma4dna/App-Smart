@@ -68,13 +68,17 @@ class LatestAreivalProduct extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         IconButton(
-                          onPressed: () {
-                              if (cardProvider.isProductIncard(
-                                  productId: getCurntProduct!.productId)) {
+                          onPressed: () async{
+                                if (cardProvider.isProductIncard(
+                                  productId: getCurntProduct.productId)) {
                                 return;
                               }
-                              cardProvider.addProductToCard(
-                                  productId: getCurntProduct.productId);
+                              // cardProvider.addProductToCard(
+                              //     productId: getCurntProduct.productId);
+                            await  cardProvider.addCartToFirebase(
+                                  productId: getCurntProduct.productId,
+                                  quantiti: 1,
+                                  context: context);
                           },
                           icon:  Icon(cardProvider.isProductIncard(
                                       productId: getCurntProduct!.productId)

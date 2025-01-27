@@ -49,11 +49,12 @@ class _CartSecreenState extends State<CartSecreen> {
                 IconButton(
                   onPressed: () {
                     MehtodeMyApp.showErorrORwarnigDialog(
-                      isErorr:false ,
+                        isErorr: false,
                         context: context,
                         subTile: "Clear All Itemas",
-                        fce: () {
-                          cardProvider.clearAllIteam();
+                        fce: () async {
+                          //  cardProvider.clearAllIteam();
+                          await cardProvider.clearAllIteamCardFirbase();
                         });
                   },
                   icon: const Icon(

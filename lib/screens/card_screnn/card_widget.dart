@@ -25,7 +25,8 @@ class CardWidget extends StatelessWidget {
     final cardProvider = Provider.of<CardProvider>(context);
     return GestureDetector(
       onTap: () async {
-        await Navigator.pushNamed(context, ProductDeatels.routeName,arguments: getCurntProduct!.productId);
+        await Navigator.pushNamed(context, ProductDeatels.routeName,
+            arguments: getCurntProduct!.productId);
       },
       child: getCurntProduct == null
           ? SizedBox.shrink()
@@ -64,9 +65,15 @@ class CardWidget extends StatelessWidget {
                               Column(
                                 children: [
                                   IconButton(
-                                    onPressed: () {
-                                      cardProvider.removeOneIeam(
-                                          productId: cardMoelProvier.productId);
+                                    onPressed: () async {
+                                      // cardProvider.removeOneIeam(
+                                      //     productId: cardMoelProvier.productId);
+                                      await cardProvider
+                                          .clearOneteamCardFirbase(
+                                        productId: getCurntProduct.productId,
+                                        quantiti: cardMoelProvier.quantiti,
+                                        cardId: cardMoelProvier.cardId,
+                                      );
                                     },
                                     icon: Icon(
                                       IconlyBold.delete,
@@ -74,7 +81,7 @@ class CardWidget extends StatelessWidget {
                                     ),
                                   ),
                                   HartBottunWidget(
-                                    productId:getCurntProduct.productId ,
+                                    productId: getCurntProduct.productId,
                                   ),
                                 ],
                               ),

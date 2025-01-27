@@ -33,13 +33,20 @@ class _RootScreenState extends State<RootScreen> {
   Future<void> fatchDataProduct() async {
     final productProvider =
         Provider.of<ProductProvider>(context, listen: false);
+    final cardProvider = Provider.of<CardProvider>(context, listen: false);
 
     try {
-    
       Future.wait(
         {
           ///awiating any future to complete
           productProvider.featcProducts(),
+        },
+      );
+
+          Future.wait(
+        {
+        
+          cardProvider.featchCardFromFirebase(),
         },
       );
     } catch (e) {
@@ -61,11 +68,10 @@ class _RootScreenState extends State<RootScreen> {
 
   @override
   void didChangeDependencies() {
-    if(isLoading){
+    if (isLoading) {
       fatchDataProduct();
-
     }
-    
+
     super.didChangeDependencies();
   }
 

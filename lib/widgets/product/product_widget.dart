@@ -74,8 +74,8 @@ class _ProductWidgetState extends State<ProductWidget> {
                       Flexible(
                         flex: 2,
                         child: SubtitleText(
-                          lable:
-                              "${getCurntProduct.productPrice} LYD" ?? "199.9 \$",
+                          lable: "${getCurntProduct.productPrice} LYD" ??
+                              "199.9 \$",
                         ),
                       ),
                       Flexible(
@@ -84,13 +84,17 @@ class _ProductWidgetState extends State<ProductWidget> {
                           borderRadius: BorderRadius.circular(12),
                           child: InkWell(
                             borderRadius: BorderRadius.circular(12),
-                            onTap: () {
+                            onTap: () async{
                               if (cardProvider.isProductIncard(
                                   productId: getCurntProduct.productId)) {
                                 return;
                               }
-                              cardProvider.addProductToCard(
-                                  productId: getCurntProduct.productId);
+                              // cardProvider.addProductToCard(
+                              //     productId: getCurntProduct.productId);
+                            await  cardProvider.addCartToFirebase(
+                                  productId: getCurntProduct.productId,
+                                  quantiti: 1,
+                                  context: context);
                             },
                             // ignore: prefer_const_constructors
                             child: Padding(

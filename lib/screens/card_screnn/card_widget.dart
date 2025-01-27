@@ -25,7 +25,7 @@ class CardWidget extends StatelessWidget {
     final cardProvider = Provider.of<CardProvider>(context);
     return GestureDetector(
       onTap: () async {
-        await Navigator.pushNamed(context, ProductDeatels.routeName);
+        await Navigator.pushNamed(context, ProductDeatels.routeName,arguments: getCurntProduct!.productId);
       },
       child: getCurntProduct == null
           ? SizedBox.shrink()

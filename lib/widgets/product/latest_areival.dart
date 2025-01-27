@@ -4,6 +4,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shoapsmart_useers_laerm/moeals/product_mosel.dart';
+import 'package:shoapsmart_useers_laerm/provider/card_provider.dart';
 import 'package:shoapsmart_useers_laerm/provider/product_provider.dart';
 import 'package:shoapsmart_useers_laerm/provider/viwed_recently.dart';
 import 'package:shoapsmart_useers_laerm/screens/inner_secreen/product_deatels.dart';
@@ -19,6 +20,9 @@ class LatestAreivalProduct extends StatelessWidget {
     final ProductModel getProduct = Provider.of<ProductModel>(context);
     final ProductProvider productProvider =
         Provider.of<ProductProvider>(context);
+        
+    
+    final cardProvider = Provider.of<CardProvider>(context);
     final getCurntProduct = productProvider.findByProId(productId);
     final viwedRecentlyProvider = Provider.of<ViwedRecentlyProvider>(context);
     Size size = MediaQuery.of(context).size;
@@ -64,8 +68,18 @@ class LatestAreivalProduct extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
+                          onPressed: () {
+                              if (cardProvider.isProductIncard(
+                                  productId: getCurntProduct!.productId)) {
+                                return;
+                              }
+                              cardProvider.addProductToCard(
+                                  productId: getCurntProduct.productId);
+                          },
+                          icon:  Icon(cardProvider.isProductIncard(
+                                      productId: getCurntProduct!.productId)
+                                  ? Icons.check
+                                  : 
                             Icons.add_shopping_cart_outlined,
                             size: 25,
                           ),

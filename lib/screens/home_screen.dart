@@ -15,7 +15,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ProductProvider productProvider=Provider.of<ProductProvider>(context);
+    final ProductProvider productProvider =
+        Provider.of<ProductProvider>(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -30,114 +31,98 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body:  StreamBuilder<List<ProductModel>>(
-            stream: productProvider.featchProductsStream(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: TitleText(
-                    lable: snapshot.error.toString(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 12,
+            right: 12,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: size.height * 0.24,
+                width: double.infinity,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12),
                   ),
-                );
-              } else if (snapshot.data == null) {
-                return Center(
-                  child: TitleText(
-                    lable: snapshot.error.toString(),
-                  ),
-                );
-              }
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 12,right: 12,),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: size.height * 0.24,
-                    width: double.infinity,
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(12),
-                        topRight: Radius.circular(12),
-                      ),
-                      child: Swiper(
-                        autoplay: true,
-                        itemBuilder: (context, index) =>
-                            Image.asset(AppConestant.imageBaners[index]),
-                        itemCount: AppConestant.imageBaners.length,
-                        pagination: const SwiperPagination(
-                          builder: DotSwiperPaginationBuilder(
-                            activeColor: Colors.blue,
-                            color: Colors.white,
-                          ),
-                        ),
+                  child: Swiper(
+                    autoplay: true,
+                    itemBuilder: (context, index) =>
+                        Image.asset(AppConestant.imageBaners[index]),
+                    itemCount: AppConestant.imageBaners.length,
+                    pagination: const SwiperPagination(
+                      builder: DotSwiperPaginationBuilder(
+                        activeColor: Colors.blue,
+                        color: Colors.white,
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                   Padding(
-                    padding: EdgeInsets.only(
-                      left: 8,
-                    ),
-                    child: Visibility(
-                      visible: productProvider.getProduct.isNotEmpty,
-                      child: TitleText(
-                        lable: "Ltast Arival",
-                      ),
-                    ),
-                  ),
-                  Visibility(
-                      visible: productProvider.getProduct.isNotEmpty,
-                    child: SizedBox(
-                      height: size.height * 0.2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ListView.builder(
-                          itemCount: productProvider.getProduct.length<10?productProvider.getProduct.length:10,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) =>
-                               ChangeNotifierProvider.value(
-                                value:productProvider.getProduct[index] ,
-                                child: LatestAreivalProduct(
-                                  productId: productProvider.getProduct[index].productId,
-                                )),
-                        ),
-                      ),
-                    ),
-                  ),
-                
-                  // ignore: prefer_const_constructors
-                  TitleText(
-                    lable: "Catogries",
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  GridView.count(
-                    shrinkWrap: true,
-                    // ignore: prefer_const_constructors
-                    physics: NeverScrollableScrollPhysics(),
-                    crossAxisCount: 4,
-                  
-                  
-          
-                    children: List.generate(
-                      AppConestant.catogriesModels.length,
-                      (index) => CatogresRoundedProduct(
-                        name: AppConestant.catogriesModels[index].name,
-                        image: AppConestant.catogriesModels[index].image,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-          );
-        }
+              const SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: 8,
+                ),
+                child: Visibility(
+                  visible: productProvider.getProduct.isNotEmpty,
+                  child: TitleText(
+                    lable: "Ltast Arival",
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: productProvider.getProduct.isNotEmpty,
+                child: SizedBox(
+                  height: size.height * 0.2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListView.builder(
+                      itemCount: productProvider.getProduct.length < 10
+                          ? productProvider.getProduct.length
+                          : 10,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) =>
+                          ChangeNotifierProvider.value(
+                              value: productProvider.getProduct[index],
+                              child: LatestAreivalProduct(
+                                productId:
+                                    productProvider.getProduct[index].productId,
+                              )),
+                    ),
+                  ),
+                ),
+              ),
+
+              // ignore: prefer_const_constructors
+              TitleText(
+                lable: "Catogries",
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              GridView.count(
+                shrinkWrap: true,
+                // ignore: prefer_const_constructors
+                physics: NeverScrollableScrollPhysics(),
+                crossAxisCount: 4,
+
+                children: List.generate(
+                  AppConestant.catogriesModels.length,
+                  (index) => CatogresRoundedProduct(
+                    name: AppConestant.catogriesModels[index].name,
+                    image: AppConestant.catogriesModels[index].image,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

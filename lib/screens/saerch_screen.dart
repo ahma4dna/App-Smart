@@ -61,7 +61,7 @@ class _SearchScreenState extends State<SaerchScreen> {
                 stream: productProvider.featchProductsStream(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     return Center(
                       child: TitleText(

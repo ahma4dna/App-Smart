@@ -12,9 +12,6 @@ class UserProvider with ChangeNotifier {
   Future<UserModeal?> fatcUserInfo() async {
     final auth = FirebaseAuth.instance;
     final User user = auth.currentUser!;
-    if (user == null) {
-      return null;
-    }
     final id = user.uid;
     final userDoc =
         await FirebaseFirestore.instance.collection("users").doc(id).get();

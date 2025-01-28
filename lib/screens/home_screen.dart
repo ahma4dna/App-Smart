@@ -2,7 +2,6 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shoapsmart_useers_laerm/conest/app_conestant.dart';
-import 'package:shoapsmart_useers_laerm/moeals/product_mosel.dart';
 import 'package:shoapsmart_useers_laerm/provider/product_provider.dart';
 import 'package:shoapsmart_useers_laerm/services/image_manger.dart';
 import 'package:shoapsmart_useers_laerm/widgets/name_app_text.dart';
@@ -66,12 +65,12 @@ class HomeScreen extends StatelessWidget {
                 height: 15,
               ),
               Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   left: 8,
                 ),
                 child: Visibility(
                   visible: productProvider.getProduct.isNotEmpty,
-                  child: TitleText(
+                  child: const TitleText(
                     lable: "Ltast Arival",
                   ),
                 ),

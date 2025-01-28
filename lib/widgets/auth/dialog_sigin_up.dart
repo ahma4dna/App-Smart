@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:shoapsmart_useers_laerm/services/image_manger.dart';
 import 'package:shoapsmart_useers_laerm/widgets/subtitle_text.dart';
 import 'package:shoapsmart_useers_laerm/widgets/title_text.dart';
 

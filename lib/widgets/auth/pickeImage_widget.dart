@@ -1,8 +1,9 @@
+// ignore_for_file: file_names
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shoapsmart_useers_laerm/widgets/auth/dialog_sigin_up.dart';
 
 class PickeimageWidget extends StatelessWidget {
   const PickeimageWidget(

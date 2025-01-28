@@ -61,12 +61,14 @@ class GoogleBouttonWidgget extends StatelessWidget {
           });
         } on FirebaseException catch (eror) {
           await MehtodeMyApp.showErorrORwarnigDialog(
+            // ignore: use_build_context_synchronously
             context: context,
             subTile: "Erorr Sign in with google ${eror.message}",
             fce: () {},
           );
         } catch (eror) {
           await MehtodeMyApp.showErorrORwarnigDialog(
+            // ignore: use_build_context_synchronously
             context: context,
             subTile: "Erorr Sign with google $eror",
             fce: () {},

@@ -27,7 +27,7 @@ class _ProductWidgetState extends State<ProductWidget> {
     Size size = MediaQuery.of(context).size;
     final viwedRecentlyProvider = Provider.of<ViwedRecentlyProvider>(context);
     return getCurntProduct == null
-        ? SizedBox.shrink()
+        ? const SizedBox.shrink()
         : Padding(
             padding: const EdgeInsets.all(3.0),
             child: GestureDetector(
@@ -74,8 +74,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                       Flexible(
                         flex: 2,
                         child: SubtitleText(
-                          lable: "${getCurntProduct.productPrice} LYD" ??
-                              "199.9 \$",
+                          lable: "${getCurntProduct.productPrice} LYD",
                         ),
                       ),
                       Flexible(

@@ -24,7 +24,7 @@ class OrderWidget extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: FancyShimmerImage(
-                    imageUrl: AppConestant.ImageStatic,
+                    imageUrl: AppConestant.imageConst,
                     height: size.height * 0.2,
                     width: size.height * 0.2,
                   ),

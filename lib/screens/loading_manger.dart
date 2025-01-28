@@ -13,6 +13,7 @@ class LoadingManger extends StatelessWidget {
         chaild,
         if (isloading) ...[
           Container(
+            // ignore: deprecated_member_use
             color: Colors.black.withOpacity(0.7),
           ),
           const Center(

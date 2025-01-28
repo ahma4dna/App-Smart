@@ -51,12 +51,14 @@ class _LoginScreenState extends State<LoginScreen> {
         await Navigator.pushReplacementNamed(context, RootScreen.routName);
       } on FirebaseException catch (eror) {
         await MehtodeMyApp.showErorrORwarnigDialog(
+          // ignore: use_build_context_synchronously
           context: context,
           subTile: "Erorr Log in ${eror.message}",
           fce: () {},
         );
       } catch (eror) {
         await MehtodeMyApp.showErorrORwarnigDialog(
+          // ignore: use_build_context_synchronously
           context: context,
           subTile: "Erorr Log in $eror",
           fce: () {},
@@ -255,7 +257,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                  TitleText(lable: "Dont have Account?"),
+                  const TitleText(lable: "Dont have Account?"),
                       const SizedBox(
                         width: 5,
                       ),

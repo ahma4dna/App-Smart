@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,7 @@ import 'package:shoapsmart_useers_laerm/widgets/subtitle_text.dart';
 import 'package:shoapsmart_useers_laerm/widgets/title_text.dart';
 
 class LatestAreivalProduct extends StatelessWidget {
-  LatestAreivalProduct({super.key, required this.productId});
+  const LatestAreivalProduct({super.key, required this.productId});
   final String productId;
   @override
   Widget build(BuildContext context) {
@@ -29,7 +28,7 @@ class LatestAreivalProduct extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         await Navigator.pushNamed(context, ProductDeatels.routeName,
-            arguments: getCurntProduct!.productId);
+            arguments: getCurntProduct.productId);
         viwedRecentlyProvider.addToHistory(
             productId: getCurntProduct.productId);
       },

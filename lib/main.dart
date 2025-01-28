@@ -34,9 +34,9 @@ class MyApp extends StatelessWidget {
           future: Firebase.initializeApp(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-               return Scaffold(
+               return const Scaffold(
                 body: Center(
-                  child: const CircularProgressIndicator(),
+                  child: CircularProgressIndicator(),
                 ),
               );
             } else if (snapshot.hasError) {
@@ -66,12 +66,12 @@ class MyApp extends StatelessWidget {
                 ),
               ],
               child: Consumer<TheamProvider>(
-                  builder: (context, TheamProvider, chaild) {
+                  builder: (context, themeProvider, chaild) {
                 return MaterialApp(
                   home: const RootScreen(),
                   debugShowCheckedModeBanner: false,
                   theme: Styles.themeData(
-                      isDarkTheam: TheamProvider.getIsDarkTheam,
+                      isDarkTheam: themeProvider.getIsDarkTheam,
                       context: context),
                   routes: {
                     ProductDeatels.routeName: (context) => const ProductDeatels(),

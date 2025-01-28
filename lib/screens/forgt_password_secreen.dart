@@ -30,7 +30,7 @@ class ForgtPasswordSecreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset(AssetsManager.forgotPassword,height: 250,width: double.infinity,fit: BoxFit.cover,),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 const TitleText(

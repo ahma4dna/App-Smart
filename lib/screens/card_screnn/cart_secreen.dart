@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shoapsmart_useers_laerm/provider/card_provider.dart';
-import 'package:shoapsmart_useers_laerm/screens/card_screnn/bottoun_chwakOut.dart';
+import 'package:shoapsmart_useers_laerm/screens/card_screnn/bottoun_chwak_out.dart';
 import 'package:shoapsmart_useers_laerm/screens/card_screnn/card_widget.dart';
 import 'package:shoapsmart_useers_laerm/services/image_manger.dart';
 import 'package:shoapsmart_useers_laerm/widgets/empty_bag.dart';
@@ -22,7 +22,7 @@ class _CartSecreenState extends State<CartSecreen> {
   @override
   Widget build(BuildContext context) {
     final cardProvider = Provider.of<CardProvider>(context);
-    bool isEmptey = false;
+  
     return cardProvider.getCardIea.isEmpty
         ? Scaffold(
             body: EmptyBag(
@@ -34,7 +34,7 @@ class _CartSecreenState extends State<CartSecreen> {
                 textBootun: 'Shop Now'),
           )
         : Scaffold(
-            bottomSheet: BottounChwakout(),
+            bottomSheet: const BottounChwakOut(),
             appBar: AppBar(
               title:
                   TitleText(lable: 'Cart(${cardProvider.getCardIea.length})'),
@@ -78,7 +78,7 @@ class _CartSecreenState extends State<CartSecreen> {
                     itemCount: cardProvider.cardIteams.length,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: kBottomNavigationBarHeight + 20,
                 ),
               ],

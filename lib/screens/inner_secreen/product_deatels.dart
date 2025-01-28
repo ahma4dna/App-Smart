@@ -158,7 +158,7 @@ class _ProductDeatelsState extends State<ProductDeatels> {
                         label:  Text(cardProvider.isProductIncard(
                                       productId: getCurntProduct.productId)?
                         'Product in card':  'Add to cart',
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                         ),
                         icon:  Icon(cardProvider.isProductIncard(
                                       productId: getCurntProduct.productId)
@@ -192,7 +192,7 @@ class _ProductDeatelsState extends State<ProductDeatels> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 8),
-                    child: Text('${getCurntProduct.productDescription}'),
+                    child: Text(getCurntProduct.productDescription),
                   ),
                 ],
               ),

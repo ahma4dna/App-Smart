@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shoapsmart_useers_laerm/moeals/wishlist_model.dart';
 import 'package:shoapsmart_useers_laerm/services/mehtode_my_app.dart';
-import 'package:shoapsmart_useers_laerm/widgets/auth/dialog_sigin_up.dart';
-import 'package:uuid/uuid.dart';
 
 class WishlistProvider with ChangeNotifier {
   Map<String, WishListMoel> wishlistIteams = {};

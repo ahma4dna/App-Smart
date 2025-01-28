@@ -30,9 +30,9 @@ class CardProvider with ChangeNotifier {
           context: context, subTile: "Please sign in", fce: () {});
       return;
     }
-    final cardId = Uuid().v4();
+    final cardId = const Uuid().v4();
     try {
-      userData.doc(user!.uid).update(
+      userData.doc(user.uid).update(
         {
           "userCart": FieldValue.arrayUnion(
             [
@@ -60,7 +60,7 @@ class CardProvider with ChangeNotifier {
     }
 
     try {
-      final useDoc = await userData.doc(user!.uid).get();
+      final useDoc = await userData.doc(user.uid).get();
       final data = useDoc.data();
       if (data == null || !data.containsKey("userCart")) {
         return;

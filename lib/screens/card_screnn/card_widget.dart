@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
-import 'package:shoapsmart_useers_laerm/conest/app_conestant.dart';
 import 'package:shoapsmart_useers_laerm/moeals/card_models.dart';
 import 'package:shoapsmart_useers_laerm/provider/card_provider.dart';
 import 'package:shoapsmart_useers_laerm/provider/product_provider.dart';
@@ -29,7 +28,7 @@ class CardWidget extends StatelessWidget {
             arguments: getCurntProduct!.productId);
       },
       child: getCurntProduct == null
-          ? SizedBox.shrink()
+          ? const SizedBox.shrink()
           : FittedBox(
               child: IntrinsicWidth(
                 child: Row(
@@ -124,7 +123,7 @@ class CardWidget extends StatelessWidget {
                                 },
                                 label: Text(
                                   'Quntity : ${cardMoelProvier.quantiti}',
-                                  style: TextStyle(color: Colors.blue),
+                                  style: const TextStyle(color: Colors.blue),
                                 ),
                                 icon: const Icon(
                                   IconlyLight.arrowDown2,

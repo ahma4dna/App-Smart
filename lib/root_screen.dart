@@ -91,8 +91,8 @@ class _RootScreenState extends State<RootScreen> {
     return Scaffold(
       body: PageView(
         controller: controller,
-        children: screens,
         physics: const NeverScrollableScrollPhysics(),
+        children: screens,
       ),
       bottomNavigationBar: NavigationBar(
         indicatorColor: isDark ? Colors.blueGrey : Colors.blue[100],

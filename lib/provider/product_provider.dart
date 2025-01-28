@@ -5,20 +5,20 @@ import 'package:shoapsmart_useers_laerm/moeals/product_mosel.dart';
 
 class ProductProvider with ChangeNotifier {
   static ProductProvider get(context) => Provider.of(context);
-  final List<ProductModel> Product = [];
+  final List<ProductModel> product = [];
   List<ProductModel> get getProduct {
-    return Product;
+    return product;
   }
 
   ProductModel? findByProId(String productId) {
-    if (Product.where((element) => element.productId == productId).isEmpty) {
+    if (product.where((element) => element.productId == productId).isEmpty) {
       return null;
     }
-    return Product.firstWhere((element) => element.productId == productId);
+    return product.firstWhere((element) => element.productId == productId);
   }
 
   List<ProductModel> findByCato(String catNam) {
-    List<ProductModel> catLis = Product.where((element) => element
+    List<ProductModel> catLis = product.where((element) => element
         .productCategory
         .toLowerCase()
         .contains(catNam.toLowerCase())).toList();
@@ -37,14 +37,14 @@ class ProductProvider with ChangeNotifier {
   Future<List<ProductModel>> featcProducts() async {
     try {
       await proData.orderBy("createdAt",descending:false).get().then((valueProducts) {
-        Product.clear();
+        product.clear();
 
         for (var elemnt in valueProducts.docs) {
-          Product.insert(0, ProductModel.formFireStore(elemnt));
+          product.insert(0, ProductModel.formFireStore(elemnt));
         }
       });
       notifyListeners();
-      return Product;
+      return product;
     } catch (e) {
       rethrow;
     }
@@ -54,13 +54,13 @@ class ProductProvider with ChangeNotifier {
     try {
       return proData.orderBy("createdAt",descending:false ).snapshots().map(
         (snapshot) {
-          Product.clear();
+          product.clear();
 
           for (var elemnt in snapshot.docs) {
-            Product.insert(0, ProductModel.formFireStore(elemnt));
+            product.insert(0, ProductModel.formFireStore(elemnt));
           }
 
-          return Product;
+          return product;
         },
       );
     } catch (e) {

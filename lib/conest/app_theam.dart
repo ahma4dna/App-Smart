@@ -21,10 +21,10 @@ class Styles {
         elevation: 0,
       ),
       inputDecorationTheme: InputDecorationTheme(
-        contentPadding: EdgeInsets.all(10),
+        contentPadding: const EdgeInsets.all(10),
         filled: true,
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             width: 1,
             color: Colors.transparent,
           ),
@@ -62,11 +62,11 @@ class Styles {
           : AppColors.lightScaffoldColor,
       brightness: isDarkTheam ? Brightness.dark : Brightness.light,
       cardColor: isDarkTheam
-          ? Color.fromARGB(255, 13, 6, 37)
+          ? const Color.fromARGB(255, 13, 6, 37)
           : AppColors.lightCardColor,
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
-          backgroundColor: WidgetStatePropertyAll(Colors.blue),
+          backgroundColor: const WidgetStatePropertyAll(Colors.blue),
           textStyle: WidgetStatePropertyAll(
             TextStyle(
               color: isDarkTheam ? Colors.white : Colors.black,

@@ -2,7 +2,7 @@ import 'package:shoapsmart_useers_laerm/moeals/catogeris_modeals.dart';
 import 'package:shoapsmart_useers_laerm/services/image_manger.dart';
 
 class AppConestant {
-  static const String ImageStatic =
+  static const String imageConst =
       'https://i.ibb.co/8r1Ny2n/20-Nike-Air-Force-1-07.png'; 
         static const String test ='https://storage.store.arriadagroup.com/images/products/2913/variants/5060/934153457650eb24d5cebe5.48022790___b77591109449ef901a2e0e93d2b2f1e2.webp';
   static List<String> imageBaners = [

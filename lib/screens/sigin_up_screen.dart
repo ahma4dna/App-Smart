@@ -1,20 +1,17 @@
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:shoapsmart_useers_laerm/conest/myValiditor.dart';
+import 'package:shoapsmart_useers_laerm/conest/my_valydator.dart';
 import 'package:shoapsmart_useers_laerm/provider/card_provider.dart';
 import 'package:shoapsmart_useers_laerm/provider/wishlist_provider.dart';
 import 'package:shoapsmart_useers_laerm/root_screen.dart';
 import 'package:shoapsmart_useers_laerm/screens/loading_manger.dart';
 import 'package:shoapsmart_useers_laerm/services/mehtode_my_app.dart';
-import 'package:shoapsmart_useers_laerm/widgets/auth/dialog_sigin_up.dart';
 import 'package:shoapsmart_useers_laerm/widgets/auth/pickeImage_widget.dart';
 import 'package:shoapsmart_useers_laerm/widgets/name_app_text.dart';
 import 'package:shoapsmart_useers_laerm/widgets/subtitle_text.dart';
@@ -122,12 +119,14 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
         await Navigator.pushReplacementNamed(context, RootScreen.routName);
       } on FirebaseException catch (eror) {
         await MehtodeMyApp.showErorrORwarnigDialog(
+          // ignore: use_build_context_synchronously
           context: context,
           subTile: "Erorr Sign up ${eror.message}",
           fce: () {},
         );
       } catch (eror) {
         await MehtodeMyApp.showErorrORwarnigDialog(
+          // ignore: use_build_context_synchronously
           context: context,
           subTile: "Erorr Sign up $eror",
           fce: () {},
@@ -261,7 +260,7 @@ class _SiginUpScreenState extends State<SiginUpScreen> {
                   ),
                   TextFormField(
                     validator: (value) {
-                      return Myvaliditor.RequstPassowrd(
+                      return Myvalydator.requestPassword(
                           value: value, passsword: passwordControler.text);
                     },
                     controller: requestPasswordControler,

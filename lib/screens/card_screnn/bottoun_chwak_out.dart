@@ -5,8 +5,8 @@ import 'package:shoapsmart_useers_laerm/provider/product_provider.dart';
 import 'package:shoapsmart_useers_laerm/widgets/subtitle_text.dart';
 import 'package:shoapsmart_useers_laerm/widgets/title_text.dart';
 
-class BottounChwakout extends StatelessWidget {
-  const BottounChwakout({super.key});
+class BottounChwakOut extends StatelessWidget {
+  const BottounChwakOut({super.key});
 
   @override
   Widget build(BuildContext context) {

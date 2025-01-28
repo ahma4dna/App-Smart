@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -26,6 +28,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen>
     with AutomaticKeepAliveClientMixin {
+  @override
   bool get wantKeepAlive => true;
 
   User? user = FirebaseAuth.instance.currentUser;
@@ -42,6 +45,8 @@ class _ProfileScreenState extends State<ProfileScreen>
       userModeal = await userProvider.fatcUserInfo();
     } on FirebaseException catch (eror) {
       await MehtodeMyApp.showErorrORwarnigDialog(
+        // ignore: duplicate_ignore
+        // ignore: use_build_context_synchronously
         context: context,
         subTile: "Erorr User info  ${eror.message}",
         fce: () {},
@@ -92,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               Visibility(
                 visible: user == null ? true : false,
                 child: const Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: EdgeInsets.all(20.0),
                   child: TitleText(lable: 'Pleasse to havev unlatimte acces'),
                 ),
               ),

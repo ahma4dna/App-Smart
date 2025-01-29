@@ -6,7 +6,8 @@ import 'package:shoapsmart_useers_laerm/widgets/subtitle_text.dart';
 import 'package:shoapsmart_useers_laerm/widgets/title_text.dart';
 
 class BottounChwakOut extends StatelessWidget {
-  const BottounChwakOut({super.key});
+  const BottounChwakOut({super.key, required this.function});
+  final Function function;
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +30,16 @@ class BottounChwakOut extends StatelessWidget {
               //replace Expanded Widget
               // ignore: prefer_const_constructors
               Flexible(
-                child:  Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    FittedBox(child: TitleText(lable: "Title (${cardProvider.cardIteams.length} product/ ${cardProvider.getQuantit()} iteams) ")),
-                     SubtitleText(
-                      lable: '${cardProvider.getToatalProd(productProvider: productProvider)}\$',
+                    FittedBox(
+                        child: TitleText(
+                            lable:
+                                "Title (${cardProvider.cardIteams.length} product/ ${cardProvider.getQuantit()} iteams) ")),
+                    SubtitleText(
+                      lable:
+                          '${cardProvider.getToatalProd(productProvider: productProvider)}\$',
                       color: Colors.blue,
                     ),
                   ],
@@ -48,7 +53,9 @@ class BottounChwakOut extends StatelessWidget {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  await function();
+                },
                 child: const Text(
                   'CheakOut',
                   style: TextStyle(color: Colors.blue),

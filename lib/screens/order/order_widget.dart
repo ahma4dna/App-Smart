@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:shoapsmart_useers_laerm/conest/app_conestant.dart';
+import 'package:shoapsmart_useers_laerm/moeals/order_moel.dart';
 import 'package:shoapsmart_useers_laerm/screens/inner_secreen/product_deatels.dart';
 import 'package:shoapsmart_useers_laerm/widgets/subtitle_text.dart';
 import 'package:shoapsmart_useers_laerm/widgets/title_text.dart';
 
 class OrderWidget extends StatelessWidget {
-  const OrderWidget({super.key});
+  const OrderWidget({super.key, required this.order});
+  final OrdersModelAdvanced order;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -24,7 +26,7 @@ class OrderWidget extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: FancyShimmerImage(
-                    imageUrl: AppConestant.imageConst,
+                    imageUrl: order.imageUrl,
                     height: size.height * 0.2,
                     width: size.height * 0.2,
                   ),
@@ -43,7 +45,7 @@ class OrderWidget extends StatelessWidget {
                         SizedBox(
                           width: size.width * 0.6,
                           child: TitleText(
-                            lable: 'Title' * 10,
+                            lable: order.productTitle,
                             maxLine: 2,
                           ),
                         ),
@@ -59,12 +61,12 @@ class OrderWidget extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Row(
+                    Row(
                       children: [
                         TitleText(lable: "Price:"),
                         Flexible(
                           child: SubtitleText(
-                            lable: '  20 \$',
+                            lable: '   ${order!.price} LYD',
                             color: Colors.blue,
                           ),
                         ),
@@ -73,12 +75,12 @@ class OrderWidget extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Row(
+                     Row(
                       children: [
-                        TitleText(lable: "Qty:"),
+                        const TitleText(lable: "Qty:"),
                         Flexible(
                           child: SubtitleText(
-                            lable: '  10',
+                            lable: '  ${order.quantity}',
                             color: Colors.black,
                           ),
                         ),

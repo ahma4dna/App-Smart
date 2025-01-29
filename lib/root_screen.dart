@@ -3,8 +3,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shoapsmart_useers_laerm/provider/card_provider.dart';
+import 'package:shoapsmart_useers_laerm/provider/orderProvider.dart';
 import 'package:shoapsmart_useers_laerm/provider/product_provider.dart';
 import 'package:shoapsmart_useers_laerm/provider/theam_provider.dart';
+import 'package:shoapsmart_useers_laerm/provider/user_provider.dart';
 import 'package:shoapsmart_useers_laerm/provider/wishlist_provider.dart';
 import 'package:shoapsmart_useers_laerm/screens/card_screnn/cart_secreen.dart';
 import 'package:shoapsmart_useers_laerm/screens/home_screen.dart';
@@ -36,6 +38,9 @@ class _RootScreenState extends State<RootScreen> {
         Provider.of<ProductProvider>(context, listen: false);
     final cardProvider = Provider.of<CardProvider>(context, listen: false);
         final wishlistProvider = Provider.of<WishlistProvider>(context,listen: false);
+          final userProvider = Provider.of<UserProvider>(context, listen: false);
+              final orderPro = Provider.of<Orderprovider>(context,listen: false);
+
 
 
     try {
@@ -43,6 +48,8 @@ class _RootScreenState extends State<RootScreen> {
         {
           ///awiating any future to complete
           productProvider.featcProducts(),
+          userProvider.fatcUserInfo(),
+          orderPro.featchOrder(),
         },
       );
 

@@ -57,12 +57,14 @@ class WishlistProvider with ChangeNotifier {
             }
           ]),
         });
+      
         await fatcWislistFirebase();
         Fluttertoast.showToast(msg: "Added To WishList");
       } catch (e) {
         rethrow;
       }
     } else {
+        wishlistIteams.remove(productId);
       await removeWishListFirebase(productId: productId, context: context);
     }
   }
@@ -85,7 +87,7 @@ class WishlistProvider with ChangeNotifier {
           }
         ]),
       });
-      wishlistIteams.remove(productId);
+      
       await fatcWislistFirebase();
       Fluttertoast.showToast(msg: "Removed To WishList");
     } catch (e) {
